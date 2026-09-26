@@ -1,37 +1,53 @@
 # Tang Nano 9K Traffic Light
 
-A Verilog implementation of the same 3-1-3 traffic-light behavior as the breadboard circuit:
+This is a simple traffic light written in Verilog for the Tang Nano 9K. It is meant to work almost like the traffic light circuit on the breadboard.
 
-- Green for 3 seconds
-- Yellow for 1 second
-- Red for 3 seconds
-- Repeat
+The lights run in this order:
 
-## Tang Nano 9K connections
+* Green for 3 seconds
+* Yellow for 1 second
+* Red for 3 seconds
+* Then back to green
 
-- 27 MHz clock: pin 52
-- Green LED: pin 10
-- Yellow LED: pin 11
-- Red LED: pin 13
-- S2 reset button: pin 3 (active-low)
+## How it works
 
-The three onboard LEDs are active-low, so the Verilog drives `0` when a light should be ON.
+The Tang Nano has a 27 MHz clock, which is much faster than we need for a traffic light. The code counts the clock cycles until one second has passed, then updates the current light.
 
-## Lushay Code
+The traffic light itself is a small state machine with three states:
 
-Open this folder in VS Code with the Lushay Code extension installed and the OSS-CAD toolchain available.
+```text
+Green → Yellow → Red → Green
+```
 
-Open `traffic_light.lushay.json`, then use **FPGA Toolchain -> Build and Program**.
+Pressing S2 resets the circuit and starts it at green.
 
-The Lushay Code workflow automatically synthesizes the Verilog, places/routes it using the `.cst` constraints, creates the bitstream, and programs the Tang Nano 9K. The project format and workflow are documented by Lushay Labs.
+## Pins
 
-## Command-line fallback
+The `.cst` file uses these Tang Nano 9K pins:
 
-With OSS-CAD Suite installed:
+* Clock: pin 52
+* Green LED: pin 10
+* Yellow LED: pin 11
+* Red LED: pin 13
+* S2 reset button: pin 3
+
+The onboard LEDs are active-low, so a `0` turns an LED on.
+
+## Running it with Lushay Code
+
+Open this folder in VS Code with Lushay Code and the OSS-CAD Suite toolchain installed.
+
+Make sure `traffic_light.lushay.json` is selected as the project. Then use **FPGA Toolchain → Build and Program**.
+
+The project uses `top.v` as the top-level Verilog file and `tangnano9k.cst` for the pin assignments.
+
+## Command line
+
+With OSS-CAD Suite installed, you can also build and program it from the terminal:
 
 ```bash
 make
 make load
 ```
 
-`make load` builds the bitstream if needed and writes it to flash with `openFPGALoader`.
+`make load` programs the resulting bitstream to the Tang Nano 9K.
