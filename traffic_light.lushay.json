@@ -1,0 +1,9 @@
+{
+  "name": "traffic_light",
+  "includedFiles": [
+    "top.v"
+  ],
+  "constraintsFile": "tangnano9k.cst",
+  "synthGowinOptions": ["-noalu", "-nolutram"],
+  "nextPnrGowinOptions": []
+}

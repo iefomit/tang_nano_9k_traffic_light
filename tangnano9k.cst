@@ -1,0 +1,20 @@
+// Tang Nano 9K traffic-light project
+// 27 MHz oscillator and three onboard user LEDs.
+// S2 is used as an active-low reset.
+
+IO_LOC "clk" 52;
+IO_PORT "clk" IO_TYPE=LVCMOS33 PULL_MODE=UP;
+
+// User LEDs are active-low.
+IO_LOC "led_green" 10;
+IO_PORT "led_green" IO_TYPE=LVCMOS33 PULL_MODE=UP DRIVE=8;
+
+IO_LOC "led_yellow" 11;
+IO_PORT "led_yellow" IO_TYPE=LVCMOS33 PULL_MODE=UP DRIVE=8;
+
+IO_LOC "led_red" 13;
+IO_PORT "led_red" IO_TYPE=LVCMOS33 PULL_MODE=UP DRIVE=8;
+
+// S2 button: active-low.
+IO_LOC "reset_n" 3;
+IO_PORT "reset_n" IO_TYPE=LVCMOS33 PULL_MODE=UP;
